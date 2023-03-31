@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/courses")
-@CrossOrigin("http://localhost:4200/")
 public class CourseController {
 
     private final CourseRepository courseRepository;
@@ -44,6 +43,11 @@ public class CourseController {
             c.setCategory("front-end");
             courseRepository.save(c);
         };
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Course> findById(@PathVariable Long id) {
+        return courseRepository.findById(id).map(record -> ResponseEntity.ok(record)).orElse(ResponseEntity.notFound().build());
     }
 
 
