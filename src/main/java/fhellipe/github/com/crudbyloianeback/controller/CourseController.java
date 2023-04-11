@@ -2,6 +2,9 @@ package fhellipe.github.com.crudbyloianeback.controller;
 
 import fhellipe.github.com.crudbyloianeback.model.Course;
 import fhellipe.github.com.crudbyloianeback.repository.CourseRepository;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +31,7 @@ public class CourseController {
 
     @PostMapping()
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Course create(@RequestBody Course course) {
+    public Course create(@RequestBody @Valid Course course) {
         // System.out.println(course.getName());
         return courseRepository.save(course);
         // return ResponseEntity.status(HttpStatus.CREATED).body(courseRepository.save(course));
@@ -40,18 +43,18 @@ public class CourseController {
             courseRepository.deleteAll();
             Course c = new Course();
             c.setName("Angular com Spring");
-            c.setCategory("front-end");
+            c.setCategory("Front-end");
             courseRepository.save(c);
         };
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Course> findById(@PathVariable Long id) {
+    public ResponseEntity<Course> findById(@PathVariable @NotNull @Positive Long id) {
         return courseRepository.findById(id).map(recordFound -> ResponseEntity.ok(recordFound)).orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Course> update(@PathVariable Long id, @RequestBody Course course) {
+    public ResponseEntity<Course> update(@Valid @NotNull @Positive @PathVariable Long id, @RequestBody Course course) {
         return courseRepository.findById(id)
                 .map(recordFound -> {
                     recordFound.setName(course.getName());
@@ -62,7 +65,7 @@ public class CourseController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@NotNull @Positive @PathVariable Long id) {
         return courseRepository.findById(id)
                 .map(recordFound -> {
                     courseRepository.deleteById(id);
