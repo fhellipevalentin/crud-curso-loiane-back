@@ -1,5 +1,6 @@
 package fhellipe.github.com.crudbyloianeback.service;
 
+import fhellipe.github.com.crudbyloianeback.exception.RecordNotFoundException;
 import fhellipe.github.com.crudbyloianeback.model.Course;
 import fhellipe.github.com.crudbyloianeback.repository.CourseRepository;
 import jakarta.validation.Valid;
@@ -27,8 +28,8 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
-    public Optional<Course> findById(@PathVariable @NotNull @Positive Long id) {
-        return courseRepository.findById(id);
+    public Course findById(@PathVariable @NotNull @Positive Long id) {
+        return courseRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
     }
 
     public Course create(@Valid Course course) {
@@ -37,20 +38,22 @@ public class CourseService {
         // return ResponseEntity.status(HttpStatus.CREATED).body(courseRepository.save(course));
     }
 
-    public Optional<Course> update(@Valid @NotNull @Positive Long id, Course course) {
+    public Course update(@Valid @NotNull @Positive Long id, Course course) {
         return courseRepository.findById(id)
                 .map(recordFound -> {
                     recordFound.setName(course.getName());
                     recordFound.setCategory(course.getCategory());
                     return courseRepository.save(recordFound);
-                });
+                }).orElseThrow(() -> new RecordNotFoundException(id));
     }
 
-    public boolean delete(@NotNull @Positive @PathVariable Long id) {
-        return courseRepository.findById(id)
+    public void delete(@NotNull @Positive @PathVariable Long id) {
+
+        courseRepository.delete(courseRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(id)));
+        /*courseRepository.findById(id)
                 .map(recordFound -> {
                     courseRepository.deleteById(id);
                     return true;
-                }).orElse(false);
+                }).orElseThrow(() -> new RecordNotFoundException(id));*/
     }
 }
