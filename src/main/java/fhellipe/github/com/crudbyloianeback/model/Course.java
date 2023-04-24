@@ -27,6 +27,6 @@ public class Course {
 
     @NotNull
     @Length(max = 20)
-    @Pattern(regexp = "Back-end|Front-end")
+    @Pattern(regexp = "Back-End|Front-End")
     private String category;
 }
