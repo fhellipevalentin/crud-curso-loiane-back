@@ -23,12 +23,10 @@ import java.util.List;
 @RequestMapping("/api/courses")
 public class CourseController {
     private final CourseService courseService;
-    private final CourseMapper courseMapper;
 
 
     public CourseController(CourseService courseService, CourseMapper courseMapper) {
         this.courseService = courseService;
-        this.courseMapper = courseMapper;
     }
 
     @GetMapping

@@ -15,7 +15,7 @@ public class CourseMapper {
             return null;
         }
 
-        return new CourseDTO(course.getId(), course.getName(), "Front-End");
+        return new CourseDTO(course.getId(), course.getName(), course.getCategory().getValue());
     }
     public Course toEntity(CourseDTO courseDTO) {
 
@@ -28,11 +28,22 @@ public class CourseMapper {
             course.setId(courseDTO.id());
         }
         course.setName(courseDTO.name());
-        course.setCategory(Category.FRONT_END);
-        course.setStatus("Ativo");
+        course.setCategory(convertCategoryValue(courseDTO.category()));
         return course;
 
         // Builder pattern
     }
 
+    /* aqui é onde a conversão dinâmica de tipos enumerados se dispõe para o DTO */
+
+    public Category convertCategoryValue(String value) {
+        if (value == null) {
+            return null;
+        }
+        return switch (value) {
+            case "Front-End" -> Category.FRONT_END;
+            case "Back-End" -> Category.BACK_END;
+            default -> throw new IllegalArgumentException("Categoria inválida: " + value);
+        };
+    }
 }

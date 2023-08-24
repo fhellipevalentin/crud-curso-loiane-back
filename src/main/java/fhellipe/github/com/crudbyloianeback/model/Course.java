@@ -3,7 +3,9 @@ package fhellipe.github.com.crudbyloianeback.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import fhellipe.github.com.crudbyloianeback.enums.Category;
+import fhellipe.github.com.crudbyloianeback.enums.Status;
 import fhellipe.github.com.crudbyloianeback.enums.converters.CategoryConverter;
+import fhellipe.github.com.crudbyloianeback.enums.converters.StatusConverter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -39,8 +41,7 @@ public class Course {
     private Category category;
 
     @NotNull
-    @Length(max = 10)
     @Column(length = 10, nullable = false)
-    @Pattern(regexp = "Ativo|Inativo")
-    private String status = "Ativo";
+    @Convert(converter = StatusConverter.class)
+    private Status status = Status.ACTIVE;
 }
