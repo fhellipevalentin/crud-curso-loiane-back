@@ -1,5 +1,6 @@
 package fhellipe.github.com.crudbyloianeback.dto.mapper;
 import fhellipe.github.com.crudbyloianeback.dto.CourseDTO;
+import fhellipe.github.com.crudbyloianeback.enums.Category;
 import fhellipe.github.com.crudbyloianeback.model.Course;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ public class CourseMapper {
             return null;
         }
 
-        return new CourseDTO(course.getId(), course.getName(), course.getCategory());
+        return new CourseDTO(course.getId(), course.getName(), "Front-End");
     }
     public Course toEntity(CourseDTO courseDTO) {
 
@@ -27,7 +28,7 @@ public class CourseMapper {
             course.setId(courseDTO.id());
         }
         course.setName(courseDTO.name());
-        course.setCategory(courseDTO.category());
+        course.setCategory(Category.FRONT_END);
         course.setStatus("Ativo");
         return course;
 

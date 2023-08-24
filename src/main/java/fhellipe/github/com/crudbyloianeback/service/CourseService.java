@@ -2,6 +2,7 @@ package fhellipe.github.com.crudbyloianeback.service;
 
 import fhellipe.github.com.crudbyloianeback.dto.CourseDTO;
 import fhellipe.github.com.crudbyloianeback.dto.mapper.CourseMapper;
+import fhellipe.github.com.crudbyloianeback.enums.Category;
 import fhellipe.github.com.crudbyloianeback.exception.RecordNotFoundException;
 import fhellipe.github.com.crudbyloianeback.repository.CourseRepository;
 import jakarta.validation.Valid;
@@ -57,7 +58,7 @@ public class CourseService {
         return courseRepository.findById(id)
                 .map(recordFound -> {
                     recordFound.setName(course.name());
-                    recordFound.setCategory(course.category());
+                    recordFound.setCategory(Category.FRONT_END);
                     return courseMapper.toDTO(courseRepository.save(recordFound));
                 })
                 .orElseThrow(() -> new RecordNotFoundException(id));

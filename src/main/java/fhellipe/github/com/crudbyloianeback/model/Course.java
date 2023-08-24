@@ -2,6 +2,8 @@ package fhellipe.github.com.crudbyloianeback.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import fhellipe.github.com.crudbyloianeback.enums.Category;
+import fhellipe.github.com.crudbyloianeback.enums.converters.CategoryConverter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -32,10 +34,9 @@ public class Course {
     private String name;
 
     @NotNull
-    @Length(max = 20)
     @Column(length = 10, nullable = false)
-    @Pattern(regexp = "Back-End|Front-End")
-    private String category;
+    @Convert(converter = CategoryConverter.class)
+    private Category category;
 
     @NotNull
     @Length(max = 10)

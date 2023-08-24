@@ -2,6 +2,7 @@ package fhellipe.github.com.crudbyloianeback.controller;
 
 import fhellipe.github.com.crudbyloianeback.dto.CourseDTO;
 import fhellipe.github.com.crudbyloianeback.dto.mapper.CourseMapper;
+import fhellipe.github.com.crudbyloianeback.enums.Category;
 import fhellipe.github.com.crudbyloianeback.model.Course;
 import fhellipe.github.com.crudbyloianeback.repository.CourseRepository;
 import fhellipe.github.com.crudbyloianeback.service.CourseService;
@@ -65,7 +66,7 @@ public class CourseController {
             courseRepository.deleteAll();
             Course c = new Course();
             c.setName("Angular com Spring");
-            c.setCategory("Front-End");
+            c.setCategory(Category.FRONT_END);
             courseRepository.save(c);
         };
     }
