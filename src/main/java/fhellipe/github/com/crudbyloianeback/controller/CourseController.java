@@ -4,6 +4,7 @@ import fhellipe.github.com.crudbyloianeback.dto.CourseDTO;
 import fhellipe.github.com.crudbyloianeback.dto.mapper.CourseMapper;
 import fhellipe.github.com.crudbyloianeback.enums.Category;
 import fhellipe.github.com.crudbyloianeback.model.Course;
+import fhellipe.github.com.crudbyloianeback.model.Lesson;
 import fhellipe.github.com.crudbyloianeback.repository.CourseRepository;
 import fhellipe.github.com.crudbyloianeback.service.CourseService;
 import jakarta.validation.Valid;
@@ -65,6 +66,12 @@ public class CourseController {
             Course c = new Course();
             c.setName("Angular com Spring");
             c.setCategory(Category.FRONT_END);
+
+            Lesson l = new Lesson();
+            l.setName("Introdução");
+            l.setYoutubeUrl("watch?v=1");
+            l.setCourse(c);
+            c.getLessons().add(l);
             courseRepository.save(c);
         };
     }
